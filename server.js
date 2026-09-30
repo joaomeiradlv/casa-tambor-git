@@ -69,7 +69,7 @@ app.use('/api/admin', adminRoutes);
 app.get('/api/health', (_req, res) => res.json({ ok: true, gateway: gatewayReady, demo: config.demoPayments }));
 app.use('/api', (_req, res) => res.status(404).json({ error: 'Rota não encontrada.' }));
 
-app.use(express.static(path.join(__dirname, '..', 'public'), { index: 'index.html', maxAge: config.isProd ? '1h' : 0 }));
+const staticOpts = { maxAge: config.isProd ? '1h' : 0, index: false }; app.use('/css', express.static(path.join(__dirname, 'css'), staticOpts)); app.use('/js', express.static(path.join(__dirname, 'js'), staticOpts)); app.get(['/', '/index.html'], (_req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 // Erros: registra no servidor, mas nunca mostra detalhes internos ao visitante
 // eslint-disable-next-line no-unused-vars
